@@ -1,0 +1,60 @@
+ <% if @view_in_config && @erb_code %>
+  <%= render inline: ERB.new(@erb_code).result(binding) %>
+  
+  <% else %>
+  <h4><%=t('BOMs') %></h>
+ 
+<div class="pagination"><%= will_paginate models %></div>
+    <table class="table table-striped">
+		<tr>
+			<th>#</th>
+			<th><%= t('Create Date') %></th>
+			<th><%= t('Project Name') %></th>
+			<th><%= t('Part Name') %></th>
+			<th><%= t('Part#') %></th>
+			<th><%= t('Spec') %></th>
+			<th><%= t('Qty/Unit') %></th>
+			<th><%= t('Est Total($)') %></th>
+			<th><%= t('Last Updated By') %></th>
+			<th></th>
+		</tr>
+		<% models.each do |r| %>
+		  <tr>
+		  	<% unless has_action_right?('show', params[:controller], r) %>
+		  	  <td><%= prt(r, :id) %></td>
+		  	<% else %>
+		  	  <td><%= link_to r.id.to_s, SUBURI + "/authentify/view_handler?index=1&url=#{bom_path(r)}" %></td>
+		  	<% end %>
+		  	<td><%= r.created_at.strftime("%Y/%m/%d") %></td>
+			<% unless has_action_right?('show', BillOfBaseMaterialx.project_class.to_s.underscore.pluralize) %>
+		  	  <td><%= prt(r, 'project.name') %></td>
+		  	<% else %>
+		  	  <td><%= link_to r.project.name, SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(ext_construction_projectx.project_path(r.project_id))}" %></td>
+		  	<% end %>
+		  	<td><%= prt(r, 'part.name') %></td>
+			<td><%= prt(r, 'part.part_num') %></td>
+			<td><%= prt(r, 'part.spec') %></td>
+			<td><%= prt(r, :qty) %>/<%= prt(r, 'part.unit') %></td>
+			<td><%= prt(r, :estimated_total) %>
+			<td><%= prt(r, 'last_updated_by.name') if r.last_updated_by_id.present? %></td> 
+			<td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_bom_path(r, :parent_record_id => r.project_id, :parent_resource => BillOfBaseMaterialx.project_class.to_s.underscore.pluralize)}", :class => BUTTONS_CLS['action']  if has_action_right?('update', params[:controller], r) %></td>
+		  </tr>
+		<% end %>
+	</table>
+	
+	<table class="table table-striped">
+	  <tr>
+	    <th>
+	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
+	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    	<%= link_to t('New Part'), SUBURI + "/authentify/view_handler?index=1&url=#{new_bom_path(project_id: @project.id)}", :class => BUTTONS_CLS['action'] if @project && has_action_right?('create', params[:controller]) %>
+	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    	    <%= link_to t('Search'), SUBURI + "/authentify/view_handler?index=1&url=#{search_boms_path}", :class => BUTTONS_CLS['action'] if has_action_right?('search', params[:controller]) %>
+  		  
+	    </th>
+	  </tr>
+	</table>
+	
+	<% end %>
+	

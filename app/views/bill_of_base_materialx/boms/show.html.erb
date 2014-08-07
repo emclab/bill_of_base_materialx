@@ -1,0 +1,77 @@
+<% if @view_in_config && @erb_code %>
+  <%= render inline: ERB.new(@erb_code).result(binding) %>
+  
+  <% else %>
+<div id="main_body">
+<h4><%=t('BOM Info') %></h4>
+
+<p>
+  <b><%= t('Project Name') %></b>
+  <%= @bom.project.name %>
+</p>
+<p>
+  <b><%= t('Name') %></b>
+  <%= @part.name %>
+</p>
+<p>
+  <b><%= t('Part#') %></b>
+  <%= @part.part_num %>
+</p>
+<p>
+  <b><%= t('Spec') %></b>
+  <%= @part.spec %>
+</p>
+<p>
+  <b><%= t('Qty/Unit') %></b>
+  <%= @bom.qty %>/<%=@part.unit %>
+</p>
+<p>
+  <b><%= t('Purchasing Status') %></b>
+  <%= @bom.status.name if @bom.status_id.present? %>
+</p>
+<p>
+  <b><%= t('Preferred Supplier') %></b>
+  <%= @bom.preferred_supplier %>
+</p>
+<p>
+  <b><%= t('Preferred Mfr') %></b>
+  <%= @bom.preferred_mfr %>
+</p>
+<p>
+  <b><%= t('Create Date') %></b>
+  <%= @bom.created_at.strftime('%Y/%m/%d') %>
+</p>
+<p>
+  <b><%= t('Est Total($)') %></b>
+  <%= @bom.estimated_total %>
+</p>
+<p>
+  <b><%= t('About Cost') %></b>
+  <%= @bom.about_cost %>
+</p>
+<p>
+  <b><%= t('Last Updated By') %></b>
+  <%= @bom.last_updated_by.name %>
+</p>
+<p>
+  <b>LOG：</b>
+  <% Commonx::Log.where('resource_id = ? AND resource_name = ?', @bom.id, params[:controller].sub('/', '_')).order("created_at DESC").each do |t| %>
+    <li><%= t.created_at.strftime("%Y/%m/%d") %>,&nbsp; <%= t.last_updated_by.name %>,&nbsp; <%= t.log %> </li>
+  <% end %>
+</p>
+
+	<table class="table table-striped">
+	  <tr>
+	    <th>
+ 		  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
+  		  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  	  <%= link_to t('New Log'), SUBURI + commonx.new_log_path(:resource_id => @bom.id, :resource_name => params[:controller], :subaction => 'bom', :format => :js), :remote => true, 
+                          :id => 'new_log_link', :class => BUTTONS_CLS['action'] if has_action_right?('create_bom', 'commonx/logs') %>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  		  <%= link_to t('Delete'), bom_path(@bom), :method => :delete, :confirm => I18n.t('Delete the record?'), :confirm => I18n.t('Delete the record?'), :class => BUTTONS_CLS['action'] if has_action_right?('destroy', params[:controller], @bom) %>
+        </th>
+	  </tr>
+	</table>    	
+</div>
+
+<% end %>

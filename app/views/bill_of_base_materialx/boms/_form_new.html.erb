@@ -1,0 +1,28 @@
+<% if @view_in_config && @erb_code %>
+  <%= render inline: @erb_code %>
+  
+  <% else %>
+  <h4><%=t('New BOM') %></h4>
+
+<%= simple_form_for @bom do |f| %>  
+      <%= f.input :project_name, :label => t('Project Name'), :readonly => true, :input_html => {:value => @project.name} if @project %>
+	  <%= f.input :project_id, :as => :hidden, :input_html => {:value => @project.id} if @project %>
+	  <%#= f.input :part_name_autocomplete, :label => t('Base Part#'), :input_html => { data: {autocomplete_source: SUBURI + base_materialx.autocomplete_parts_path}},:placeholder => t("Enter Part Name Keyword"), :required => true  %>
+	  <%= f.input :part_id, :label => t('Base Part#') %>
+	  <%= f.input :name, :label => t('Part Name'), :readonly => true %>  
+	  <%= f.input :part_num, :label => t('Part#'), :readonly => true %>
+	  <%= f.input :spec, :label => t('Spec'), :readonly => true %>
+	  <%= f.input :unit, :label => t('Qty Unit'), :readonly => true %>
+	  <%= f.input :qty, :label => t('Qty') %>
+	  <%= f.input :estimated_total, :label => t('Est Total($)') %>
+	  <%= f.input :about_cost, :label => t('About Total'), :input_html => {:rows => 2} %>
+	  <%= f.input :preferred_mfr, :label => t('Preferred Mfr'), :input_html => {:rows => 2} %>
+	  <%= f.input :preferred_supplier, :label => t('Preferred Supplier'), :input_html => {:rows => 2} %>
+	  <%= f.input :brief_note, :label => t('Brief Note'), :input_html => {:rows => 2} %>
+	  
+	  <%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+	  <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>  
+<% end %>
+  
+<% end%>
+
