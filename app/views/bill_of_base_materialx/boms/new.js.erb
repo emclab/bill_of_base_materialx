@@ -1,9 +1,9 @@
-<% if @part_id.present? %>
+<% if @part_id > 0 %>
   <% part = BillOfBaseMaterialx.part_class.find_by_id(@part_id)%>
-  $('#bom_name').val(part.name);
-  $('#bom_part_num').val(part.part_num);
-  $('#bom_spec').val(part.spec);
-  $('#bom_unit').val(part.unit);
-  $('#bom_preferred_mfr').val(part.preferred_mfr);
-  $('#bom_preferred_supplier').val(part.preferred_supplier);
+  $('#bom_name').val("<%=part.name %>");
+  $('#bom_part_num').val("<%=part.part_num %>");
+  $('#bom_spec').val("<%=part.spec %>");
+  $('#bom_unit').val("<%=part.unit %>");
+  $('#bom_preferred_mfr').val("<%=part.preferred_mfr %>");
+  $('#bom_preferred_supplier').val("<%=part.preferred_supplier %>");
 <% end %>
