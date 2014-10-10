@@ -17,7 +17,7 @@ module BillOfBaseMaterialx
     def new
       @title = t('New BOM')
       @bom = BillOfBaseMaterialx::Bom.new()
-      @part_id = params[:bom][:part_id] if params[:bom].present?
+      @part_name = params[:bom][:part_name_autocomplete] if params[:bom].present?
       @erb_code = find_config_const('bom_new_view', 'bill_of_base_materialx')
     end
   

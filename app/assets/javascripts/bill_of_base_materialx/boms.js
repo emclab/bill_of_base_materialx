@@ -17,7 +17,7 @@ $(function() {
 });
 
 $(function (){
-	$('#bom_part_id').change(function(){
+	$('#bom_part_name_autocomplete').change(function(){
       $.get(window.location, $('form').serialize(), null, "script");
   	  return false;
 	});
