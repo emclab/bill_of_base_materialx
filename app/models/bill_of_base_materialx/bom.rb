@@ -3,10 +3,10 @@ module BillOfBaseMaterialx
     attr_accessor :project_name, :status_name, :id_noupdate, :wf_comment, :part_name, :part_spec, :wf_event
     attr_accessor :name, :part_num, :spec, :unit
     attr_accessible :about_cost, :brief_note, :estimated_total, :last_updated_by_id, :part_id, :preferred_mfr, :preferred_supplier, :project_id, :qty, 
-                    :status_id, :wf_state, :name, :part_num, :spec, :unit, :project_name,
+                    :status_id, :wf_state, :name, :part_num, :spec, :unit, :project_name, :part_name_autocomplete,
                     :as => :role_new
     attr_accessible :about_cost, :brief_note, :estimated_total, :part_id, :preferred_mfr, :preferred_supplier, :qty, :status_id, :wf_state,
-                    :name, :part_num, :spec, :unit, :project_name,
+                    :name, :part_num, :spec, :unit, :project_name, :part_name_autocomplete,
                     :as => :role_update
                                     
     belongs_to :project, :class_name => BillOfBaseMaterialx.project_class.to_s
