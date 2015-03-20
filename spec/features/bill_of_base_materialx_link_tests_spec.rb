@@ -60,7 +60,7 @@ describe "LinkTests" do
     end
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id, :last_updated_by_id => @u.id, :status_id => nil)
+      task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id, :last_updated_by_id => @u.id)
       visit boms_path
       #save_and_open_page
       page.should have_content('BOMs')
@@ -113,7 +113,7 @@ describe "LinkTests" do
     end
     
     it "should delete" do
-      task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id, :last_updated_by_id => @u.id, :status_id => nil)
+      task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id, :last_updated_by_id => @u.id)
       visit boms_path
       click_link task.id.to_s
       #save_and_open_page

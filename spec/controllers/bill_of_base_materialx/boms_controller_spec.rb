@@ -43,7 +43,7 @@ module BillOfBaseMaterialx
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id)
-        task1 = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id + 1, :name => 'a new task')
+        task1 = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id + 1, part_id: @part1.id)
         get 'index', {:use_route => :bill_of_base_materialx, :project_id => @proj.id}
         assigns[:boms].should =~ [task]
       end
@@ -89,7 +89,7 @@ module BillOfBaseMaterialx
         :sql_code => "")
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        task = FactoryGirl.attributes_for(:bill_of_base_materialx_bom, :project_id => nil, :part_id => @part.id)
+        task = FactoryGirl.attributes_for(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => nil)
         get 'create', {:use_route => :bill_of_base_materialx, :bom => task}
         response.should render_template('new')
       end
@@ -136,7 +136,6 @@ module BillOfBaseMaterialx
         :sql_code => "record.last_updated_by_id == session[:user_id]")
         session[:user_id] = @u.id
         session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
-        status = FactoryGirl.create(:commonx_misc_definition, :for_which => 'part_purchasing_status')
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :last_updated_by_id => @u.id)
         get 'show', {:use_route => :bill_of_base_materialx, :id => task.id}
         response.should be_success

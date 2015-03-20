@@ -7,7 +7,7 @@
 
 <p>
   <b><%= t('Project Name') %></b>
-  <%= @bom.project.name %>
+  <%= @bom.project.name if @bom.project_id.present? %>
 </p>
 <p>
   <b><%= t('Name') %></b>
@@ -26,10 +26,6 @@
   <%= @bom.qty %>/<%=@part.unit %>
 </p>
 <p>
-  <b><%= t('Purchasing Status') %></b>
-  <%= @bom.status.name if @bom.status_id.present? %>
-</p>
-<p>
   <b><%= t('Preferred Supplier') %></b>
   <%= @bom.preferred_supplier %>
 </p>
@@ -46,12 +42,16 @@
   <%= @bom.estimated_total %>
 </p>
 <p>
+  <b><%= t('Est Unit Price($)') %></b>
+  <%= @bom.est_unit_price %>
+</p>
+<p>
   <b><%= t('About Cost') %></b>
   <%= @bom.about_cost %>
 </p>
 <p>
   <b><%= t('Last Updated By') %></b>
-  <%= @bom.last_updated_by.name %>
+  <%= @bom.last_updated_by.name if @bom.last_updated_by_id.present? %>
 </p>
 <p>
   <b>LOG：</b>

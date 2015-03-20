@@ -68,6 +68,11 @@ module BillOfBaseMaterialx
       redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!")
     end
     
+    def autocomplete
+      @boms = BillOfBaseMaterialx::Bom.joins(:part).order(:name).where("name like ?", "%#{params[:term]}%")
+      render json: @boms.map {|f| "#{f.part.name} -    #{f.part.spec}"}    #return string of 2 fields. format []-[][][][]    
+    end  
+    
     protected
     def load_parent_record
       @part = BillOfBaseMaterialx.part_class.find_by_id(params[:part_id]) if params[:part_id].present?
