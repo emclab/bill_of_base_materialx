@@ -10,10 +10,10 @@ FactoryGirl.define do
     preferred_supplier ""
     #last_updated_by_id 1
     wf_state "MyString"
-    estimated_total "9.99"
+    total_reference 10
     #status_id 1
     brief_note "MyText"
     about_cost "MyText"
-    est_unit_price 12.3
+    unit_price_reference 12.3
   end
 end

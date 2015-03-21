@@ -14,8 +14,8 @@
   <%= f.input :spec, :label => t('Spec'), :readonly => true %>
   <%= f.input :unit, :label => t('Qty Unit'), :readonly => true %>
   <%= f.input :qty, :label => t('Qty'), :readonly => readonly?(@bom, 'qty') %>
-  <%= f.input :est_unit_price, :label => t('Est Unit Price($)', :readonly => readonly?(@bom, 'est_unit_price')) %>
-  <%= f.input :estimated_total, :label => t('Est Total($)'), :readonly => readonly?(@bom, 'estimated_total') %>
+  <%= f.input :unit_price_reference, :label => t('Unit Price($)', :readonly => readonly?(@bom, 'unit_price_reference')) %>
+  <%= f.input :total_reference, :label => t('Total($)'), :readonly => readonly?(@bom, 'total_reference') %>
   <%= f.input :about_cost, :label => t('About Cost'), :input_html => {:rows => 2}, :readonly => readonly?(@bom, 'about_cost') %>
   <%= f.input :preferred_mfr, :label => t('Preferred Mfr'), :input_html => {:rows => 2}, :readonly => readonly?(@bom, 'preferred_mfr') %>
   <%= f.input :preferred_supplier, :label => t('Preferred Supplier'), :input_html => {:rows => 2}, :readonly => readonly?(@bom, 'preferred_supplier') %>

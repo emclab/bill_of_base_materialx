@@ -15,8 +15,10 @@ gem 'searchx', :path => '../searchx'
 gem 'base_materialx', :path => '../base_materialx'
 gem 'kustomerx', :path => '../kustomerx'
 gem 'ext_construction_projectx', :path => '../ext_construction_projectx'
-#gem 'state_machine_logx', :path => '../state_machine_logx'
-#gem 'biz_workflowx', :path => '../biz_workflowx'
+gem 'purchase_orderx', :path => '../purchase_orderx'
+gem 'state_machine_logx', :path => '../state_machine_logx'
+gem 'biz_workflowx', :path => '../biz_workflowx'
+gem 'supplierx', :path => '../supplierx'
 #
 #gem 'event_taskx', :path => '../event_taskx'
 

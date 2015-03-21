@@ -1,0 +1,9 @@
+PurchaseOrderx.product_item_class = 'InQuotex::Quote'
+PurchaseOrderx.supplier_class = 'Supplierx::Supplier'
+PurchaseOrderx.project_class = 'ExtConstructionProjectx::Project'
+PurchaseOrderx.customer_class = 'Kustomerx::Customer'
+PurchaseOrderx.po_category_class = 'Commonx::MiscDefinition'
+PurchaseOrderx.po_sub_category_class = 'Commonx::MiscDefinition'
+PurchaseOrderx.item_category_class = 'Commonx::MiscDefinition'
+PurchaseOrderx.item_sub_category_class = 'Commonx::MiscDefinition'
+PurchaseOrderx.mfg_class = 'Commonx::MiscDefinition'  #parking

@@ -43,6 +43,8 @@ describe "LinkTests" do
         :sql_code => "record.last_updated_by_id == session[:user_id]")
       user_access = FactoryGirl.create(:user_access, :action => 'destroy', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
+      user_access = FactoryGirl.create(:user_access, :action => 'bom_status', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
+        :sql_code => "")
       user_access = FactoryGirl.create(:user_access, :action => 'create_bom', :resource => 'commonx_logs', :role_definition_id => @role.id, :rank => 1,
       :sql_code => "")
       
@@ -120,6 +122,15 @@ describe "LinkTests" do
       page.should have_content('BOM Info')
       click_link 'Delete'
       save_and_open_page
+    end
+    
+    it "should display bom status" do
+      q_i = FactoryGirl.build(:purchase_orderx_order_item, spec: 'MyString')
+      q = FactoryGirl.create(:purchase_orderx_order, :order_items => [q_i], :project_id => @proj.id)
+      task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id, :last_updated_by_id => @u.id)
+      visit bill_of_base_materialx.bom_status_boms_path(project_id: @proj.id)
+      save_and_open_page
+      page.should have_content('MyString')  
     end
   end
 end

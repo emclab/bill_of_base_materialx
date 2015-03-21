@@ -4,6 +4,7 @@ BillOfBaseMaterialx::Engine.routes.draw do
     collection do
       get :search
       get :search_results
+      get :bom_status
     end  
   end
   

@@ -73,6 +73,11 @@ module BillOfBaseMaterialx
       render json: @boms.map {|f| "#{f.part.name} -    #{f.part.spec}"}    #return string of 2 fields. format []-[][][][]    
     end  
     
+    def bom_status
+      @boms = BillOfBaseMaterialx::Bom.where('bill_of_base_materialx_boms.project_id = ?', @project.id).order('id')
+      @erb_code = find_config_const('bom_bom_status_view', 'bill_of_base_materialx')
+    end
+    
     protected
     def load_parent_record
       @part = BillOfBaseMaterialx.part_class.find_by_id(params[:part_id]) if params[:part_id].present?

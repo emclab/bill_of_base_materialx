@@ -153,6 +153,20 @@ module BillOfBaseMaterialx
         response.should redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!")
       end
     end
+    
+    describe "GET bom_status" do
+      it "should success" do
+        user_access = FactoryGirl.create(:user_access, :action => 'bom_status', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
+        :sql_code => "")
+        session[:user_id] = @u.id
+        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
+        q_i = FactoryGirl.build(:purchase_orderx_order_item, spec: 'MyString')
+        q = FactoryGirl.create(:purchase_orderx_order, :order_items => [q_i], :project_id => @proj.id)
+        task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :last_updated_by_id => @u.id, part_id: @part.id)
+        get 'bom_status', {:use_route => :bill_of_base_materialx, :project_id => @proj.id}
+        response.should be_success
+      end
+    end
   
   end
 end

@@ -38,12 +38,12 @@
   <%= @bom.created_at.strftime('%Y/%m/%d') %>
 </p>
 <p>
-  <b><%= t('Est Total($)') %></b>
-  <%= @bom.estimated_total %>
+  <b><%= t('Total($)') %></b>
+  <%= @bom.total_reference %>
 </p>
 <p>
-  <b><%= t('Est Unit Price($)') %></b>
-  <%= @bom.est_unit_price %>
+  <b><%= t('Unit Price($)') %></b>
+  <%= @bom.unit_price_reference %>
 </p>
 <p>
   <b><%= t('About Cost') %></b>

@@ -8,10 +8,10 @@ class CreateBillOfBaseMaterialxBoms < ActiveRecord::Migration
       t.text :preferred_supplier
       t.integer :last_updated_by_id
       t.string :wf_state
-      t.integer :estimated_total
+      t.float :total_reference
       t.text :brief_note
       t.text :about_cost
-      t.float :est_unit_price
+      t.float :unit_price_reference
 
       t.timestamps
     end

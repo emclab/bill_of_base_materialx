@@ -1,0 +1,40 @@
+<% if @view_in_config && @erb_code %>
+  <%= render inline: ERB.new(@erb_code).result(binding) %>
+  
+<% else %>
+<div id="main_body">
+<table class="table table-striped">
+  <tr>
+    <th><%=t('Product Name/Spec')%></th>
+    <th><%=t('BOM Qty/Unit')%></th>    
+    <th><%=t('PO Qty/Unit')%></th>
+    <th><%=t('Qty Pending')%></th>
+    <th><%=t('Total Spent($)')%></th>
+    <th><%=t('Total to Spend($)')%></th>
+  </tr>
+
+<% @boms.each do |r| %>
+  <tr>
+  	<% po_items = PurchaseOrderx::Order.joins(:order_items).where('purchase_orderx_orders.project_id = ?', r.project_id).where('purchase_orderx_order_items.name = ? AND purchase_orderx_order_items.spec = ?', r.part.name, r.part.spec)%>
+  	<% po_qty = po_items.sum(:qty)%>
+  	<td><%= r.part.name + ' ' + r.part.spec %></td>
+  	<td><%= r.qty %><%= r.part.unit %></td>	
+    <td><%= po_qty %><%= r.part.unit %></td> 
+    <td><%= r.qty - po_qty %></td>
+    <td><%= po_items.inject(0) {|total, obj| total + obj.order_items.inject(0) {|sub_total, item| sub_total + item.qty * item.unit_price}}%></td>
+    <td><%= (r.qty - po_qty) * po_items.sum(:unit_price)/po_qty %></td>  
+  </tr>
+<% end %>
+   <table class="table table-striped">
+	  <tr>
+	    <th>
+  		  <%= link_to t('Back'), SUBURI + "/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
+  		  
+        </th>
+	  </tr>
+	</table> 
+<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :id => 'close', :class => BUTTONS_CLS['action'] %>
+    		
+</div>
+
+<% end %>

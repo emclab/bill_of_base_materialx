@@ -33,6 +33,16 @@ module BillOfBaseMaterialx
       c.should_not be_valid
     end
     
+    it "should not take 0 unit price reference" do
+      c = FactoryGirl.build(:bill_of_base_materialx_bom, :unit_price_reference => 0)
+      c.should_not be_valid
+    end
+    
+    it "should not take 0 total reference" do
+      c = FactoryGirl.build(:bill_of_base_materialx_bom, :total_reference => 0)
+      c.should_not be_valid
+    end
+    
     it "should eval dynamic validate" do
       dv = "errors.add(:project_id, I18n.t('Must be numeric'))if project_id.blank?"
       FactoryGirl.create(:engine_config, :engine_name => 'bill_of_base_materialx', :engine_version => nil, :argument_name => 'dynamic_validate', :argument_value => dv)
