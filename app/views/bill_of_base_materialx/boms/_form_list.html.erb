@@ -2,7 +2,7 @@
   <%= render inline: ERB.new(@erb_code).result(binding) %>
   
   <% else %>
-  <h4><%=t('BOMs') %></h>
+  <h4><%='BOMs' %></h>
  
 <div class="pagination"><%= will_paginate models %></div>
     <table class="table table-striped">

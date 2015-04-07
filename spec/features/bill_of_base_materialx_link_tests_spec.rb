@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe "LinkTests" do
+RSpec.describe "LinkTests", type: :request do
   describe "GET /bill_of_base_materialx_link_tests" do
     mini_btn = 'btn btn-mini '
     ActionView::CompiledTemplates::BUTTONS_CLS =
@@ -63,65 +63,65 @@ describe "LinkTests" do
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
       task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id, :last_updated_by_id => @u.id)
-      visit boms_path
-      #save_and_open_page
-      page.should have_content('BOMs')
-      click_link 'Edit'
-      page.should have_content('Edit BOM')
+      visit bill_of_base_materialx.boms_path
       save_and_open_page
+      expect(page).to have_content('BOMs')
+      click_link 'Edit'
+      expect(page).to have_content('Edit BOM')
+      #save_and_open_page
       fill_in 'bom_qty', :with => 122
       click_button 'Save'
-      visit boms_path
-      page.should have_content(122)
+      visit bill_of_base_materialx.boms_path
+      expect(page).to have_content(122)
       #with wrong data
-      visit boms_path
+      visit bill_of_base_materialx.boms_path
       #save_and_open_page
-      page.should have_content('BOMs')
+      expect(page).to have_content('BOMs')
       click_link 'Edit'
       fill_in 'bom_qty', :with => 'test again'
       click_button 'Save'
       #save_and_open_page
-      visit boms_path
-      page.should_not have_content('test again')
+      visit bill_of_base_materialx.boms_path
+      expect(page).to_not have_content('test again')
       
-      visit boms_path
+      visit bill_of_base_materialx.boms_path
       click_link task.id.to_s
       #save_and_open_page
-      page.should have_content('BOM Info')
+      expect(page).to have_content('Bom Info')
       click_link 'New Log'
       #save_and_open_page
-      page.should have_content('Log')
+      expect(page).to have_content('Log')
       
-      visit boms_path(:project_id => @proj.id)
-      save_and_open_page
+      visit bill_of_base_materialx.boms_path(:project_id => @proj.id)
+      #save_and_open_page
       click_link 'New Part'
-      page.should have_content('New BOM')
+      expect(page).to have_content('New BOM')
       fill_in 'bom_part_id', :with => @part.id + 1
       fill_in 'bom_qty', :with => 100
       click_button 'Save'
-      save_and_open_page
-      visit boms_path
+      #save_and_open_page
+      visit bill_of_base_materialx.boms_path
       
-      page.should have_content(100)
+      expect(page).to have_content(100)
       #with wrong data
-      visit boms_path(:project_id => @proj.id)
+      visit bill_of_base_materialx.boms_path(:project_id => @proj.id)
       click_link 'New Part'
       fill_in 'bom_part_id', :with => ''
       fill_in 'bom_qty', :with => 199
       click_button 'Save'
       #save_and_open_page
-      visit boms_path
-      page.should_not have_content(199)           
+      visit bill_of_base_materialx.boms_path
+      expect(page).to_not have_content(199)           
     end
     
     it "should delete" do
       task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id, :last_updated_by_id => @u.id)
-      visit boms_path
+      visit bill_of_base_materialx.boms_path
       click_link task.id.to_s
-      #save_and_open_page
-      page.should have_content('BOM Info')
-      click_link 'Delete'
       save_and_open_page
+      expect(page).to have_content('Bom Info')
+      click_link 'Delete'
+      #save_and_open_page
     end
     
     it "should display bom status" do
@@ -130,7 +130,7 @@ describe "LinkTests" do
       task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id, :last_updated_by_id => @u.id)
       visit bill_of_base_materialx.bom_status_boms_path(project_id: @proj.id)
       save_and_open_page
-      page.should have_content('MyString')  
+      expect(page).to have_content('MyString')  
     end
   end
 end

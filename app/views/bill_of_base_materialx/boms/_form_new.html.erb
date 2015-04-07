@@ -2,7 +2,7 @@
   <%= render inline: @erb_code %>
   
   <% else %>
-  <h4><%=t('New BOM') %></h4>
+  <h4><%='New BOM' %></h4>
 
 <%= simple_form_for @bom do |f| %>  
       <%= f.input :project_name, :label => t('Project Name'), :readonly => true, :input_html => {:value => @project.name} if @project %>
