@@ -17,8 +17,8 @@ module BillOfBaseMaterialx
     def new
       @title = t('New BOM')
       @bom = BillOfBaseMaterialx::Bom.new()
-      @part_name = params[:bom][:part_name_autocomplete] if params[:bom].present?
       @erb_code = find_config_const('bom_new_view', 'bill_of_base_materialx')
+      @js_erb_code = find_config_const('bom_new_js_view', 'bill_of_base_materialx')
     end
   
     def create
@@ -30,6 +30,7 @@ module BillOfBaseMaterialx
         @project = BillOfBaseMaterialx.project_class.find_by_id(params[:bom][:project_id]) if params[:bom].present? && params[:bom][:project_id].present?
         @part = BillOfBaseMaterialx.part_class.find_by_id(params[:bom][:part_id].to_i) if params[:bom].present? && params[:bom][:part_id].present?
         @erb_code = find_config_const('bom_new_view', 'bill_of_base_materialx')
+        @js_erb_code = find_config_const('bom_new_js_view', 'bill_of_base_materialx')
         flash[:notice] = t('Data Error. Not Saved!')
         render 'new'
       end
@@ -40,6 +41,7 @@ module BillOfBaseMaterialx
       @bom = BillOfBaseMaterialx::Bom.find_by_id(params[:id])
       @part_id = params[:bom][:part_id] if params[:bom].present?
       @erb_code = find_config_const('bom_edit_view', 'bill_of_base_materialx')
+      @js_erb_code = find_config_const('bom_edit_js_view', 'bill_of_base_materialx')
       #if @bom.wf_state.present? && @bom.current_state != :initial_state
        # redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=NO Update. Record Being Processed!")
       #end
@@ -52,6 +54,7 @@ module BillOfBaseMaterialx
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
       else
         @erb_code = find_config_const('bom_edit_view', 'bill_of_base_materialx')
+        @js_erb_code = find_config_const('bom_edit_js_view', 'bill_of_base_materialx')
         flash[:notice] = t('Data Error. Not Updated!')
         render 'edit'
       end

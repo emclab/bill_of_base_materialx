@@ -7,7 +7,7 @@
 <%= simple_form_for @bom do |f| %>  
       <%= f.input :project_name, :label => t('Project Name'), :readonly => true, :input_html => {:value => @project.name} if @project %>
 	  <%= f.input :project_id, :as => :hidden, :input_html => {:value => @project.id} if @project %>
-	  <%#= f.input :part_name_autocomplete, :label => t('Base Part#'), :input_html => { data: {autocomplete_source: SUBURI + base_materialx.autocomplete_parts_path}},:placeholder => t("Enter Part Name Keyword"), :required => true  %>
+	  <%= f.input :part_name_autocomplete, :label => t('Base Part#'), :input_html => { data: {autocomplete_source: SUBURI + base_materialx.autocomplete_parts_path}},:placeholder => t("Enter Part Name Keyword"), :required => true  %>
 	  <%= f.input :part_id, :label => t('Base Part#') %>
 	  <%= f.input :name, :label => t('Part Name'), :readonly => true %>  
 	  <%= f.input :part_num, :label => t('Part#'), :readonly => true %>

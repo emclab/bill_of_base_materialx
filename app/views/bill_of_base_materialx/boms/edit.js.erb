@@ -1,9 +1,26 @@
-<% part = BillOfBaseMaterialx.part_class.find_by_name(@part_name) if @part_name.present? %>
-<% if part.present? %>
-  $('#bom_part_id').val("<%=part.id %>");
-  $('#bom_part_num').val("<%=part.part_num %>");
-  $('#bom_spec').val("<%=part.spec %>");
-  $('#bom_unit').val("<%=part.unit %>");
-  $('#bom_preferred_mfr').val("<%=part.preferred_mfr %>");
-  $('#bom_preferred_supplier').val("<%=part.preferred_supplier %>");
+<% if @view_in_config && @js_erb_code %>
+  <%= render inline: ERB.new(@js_erb_code).result(binding) %>
+  
+<% else %>
+
+<% if params[:bom][:part_name_autocomplete].include?(' -    ') %>
+  <% v = params[:bom][:part_name_autocomplete] %>
+  <% part = BillOfBaseMaterialx.part_class.where(name: v.sub(/\s\-\s{4}.+/, '')).where(spec: v.sub(/.+\s-\s{4}/, '')).first %>
+  <% if part.present? %>
+    $('#bom_part_id').val("<%=part.id %>");
+    $('#bom_part_num').val("<%=part.part_num %>");
+    $('#bom_spec').val("<%=part.spec %>");
+    $('#bom_unit').val("<%=part.unit %>");
+    $('#bom_preferred_mfr').val("<%=part.preferred_mfr %>");
+    $('#bom_preferred_supplier').val("<%=part.preferred_supplier %>");
+  <% else %>
+    $('#bom_part_id').val("");
+    $('#bom_part_num').val("");
+    $('#bom_spec').val("");
+    $('#bom_unit').val("");
+    $('#bom_preferred_mfr').val("");
+    $('#bom_preferred_supplier').val("");
+  <% end %>
+<% end %>
+
 <% end %>
