@@ -22,6 +22,8 @@ module BillOfBaseMaterialx
       @part = FactoryGirl.create(:base_materialx_part)
       @part1 = FactoryGirl.create(:base_materialx_part, :name => 'a new name')
       
+      session[:user_role_ids] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id).user_role_ids
+        
     end
     
     render_views
@@ -31,7 +33,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "BillOfBaseMaterialx::Bom.order('created_at DESC')")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id)
         task1 = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part1.id)
         get 'index'
@@ -42,7 +43,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "BillOfBaseMaterialx::Bom.order('created_at DESC')")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id)
         task1 = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id + 1, part_id: @part1.id)
         get 'index', {:project_id => @proj.id}
@@ -53,7 +53,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'index', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "BillOfBaseMaterialx::Bom.order('created_at DESC')")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id)
         task1 = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part1.id)
         get 'index', {:part_id => @part.id}
@@ -67,7 +66,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'create', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         get 'new', { :project_id => @proj.id}
         expect(response).to be_success
       end
@@ -79,7 +77,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'create', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.attributes_for(:bill_of_base_materialx_bom, :project_id => @proj.id )  
         get 'create', {:bom => task, :project_id => @proj.id, :part_id => @part.id}
         expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
@@ -89,7 +86,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'create', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.attributes_for(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => nil)
         get 'create', {:bom => task}
         expect(response).to render_template('new')
@@ -101,7 +97,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id)
         get 'edit', {:id => task.id}
         expect(response).to be_success
@@ -114,7 +109,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id)
         get 'update', {:id => task.id, :bom => {:name => 'new name'}}
         expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
@@ -124,7 +118,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'update', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id)
         get 'update', {:id => task.id, :bom => {:part_id => ''}}
         expect(response).to render_template('edit')
@@ -136,7 +129,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'show', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "record.last_updated_by_id == session[:user_id]")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :last_updated_by_id => @u.id)
         get 'show', {:id => task.id}
         expect(response).to be_success
@@ -148,7 +140,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'destroy', :resource => 'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         q = FactoryGirl.create(:bill_of_base_materialx_bom)
         get 'destroy', {:id => q.id }
         expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!")
@@ -160,7 +151,6 @@ module BillOfBaseMaterialx
         user_access = FactoryGirl.create(:user_access, :action => 'bom_status', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        session[:user_privilege] = Authentify::UserPrivilegeHelper::UserPrivilege.new(@u.id)
         q_i = FactoryGirl.build(:purchase_orderx_order_item, spec: 'MyString')
         q = FactoryGirl.create(:purchase_orderx_order, :order_items => [q_i], :project_id => @proj.id)
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :last_updated_by_id => @u.id, part_id: @part.id)
