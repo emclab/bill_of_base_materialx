@@ -19,7 +19,11 @@ RSpec.describe "LinkTests", type: :request do
          'inverse'      => 'btn btn-inverse',
          'mini-inverse' => mini_btn + 'btn btn-inverse',
          'link'         => 'btn btn-link',
-         'mini-link'    => mini_btn +  'btn btn-link'
+         'mini-link'    => mini_btn +  'btn btn-link',
+         'right-span#'         => '2', 
+               'left-span#'         => '6', 
+               'offset#'         => '2',
+               'form-span#'         => '4'
         }
     before(:each) do
       @pagination_config = FactoryGirl.create(:engine_config, :engine_name => nil, :engine_version => nil, :argument_name => 'pagination', :argument_value => 30)
@@ -67,7 +71,8 @@ RSpec.describe "LinkTests", type: :request do
       save_and_open_page
       expect(page).to have_content('BOMs')
       click_link 'Edit'
-      expect(page).to have_content('Edit BOM')
+      save_and_open_page
+      expect(page).to have_content('Update BOM')
       #save_and_open_page
       fill_in 'bom_qty', :with => 122
       click_button 'Save'
@@ -87,7 +92,7 @@ RSpec.describe "LinkTests", type: :request do
       visit bill_of_base_materialx.boms_path
       click_link task.id.to_s
       #save_and_open_page
-      expect(page).to have_content('Bom Info')
+      expect(page).to have_content('BOM Info')
       click_link 'New Log'
       #save_and_open_page
       expect(page).to have_content('Log')
@@ -96,6 +101,7 @@ RSpec.describe "LinkTests", type: :request do
       #save_and_open_page
       click_link 'New Part'
       expect(page).to have_content('New BOM')
+      #save_and_open_page
       fill_in 'bom_part_id', :with => @part.id + 1
       fill_in 'bom_qty', :with => 100
       click_button 'Save'
@@ -118,8 +124,8 @@ RSpec.describe "LinkTests", type: :request do
       task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id, :last_updated_by_id => @u.id)
       visit bill_of_base_materialx.boms_path
       click_link task.id.to_s
-      save_and_open_page
-      expect(page).to have_content('Bom Info')
+      #save_and_open_page
+      expect(page).to have_content('BOM Info')
       click_link 'Delete'
       #save_and_open_page
     end
@@ -129,7 +135,7 @@ RSpec.describe "LinkTests", type: :request do
       q = FactoryGirl.create(:purchase_orderx_order, :order_items => [q_i], :project_id => @proj.id)
       task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id, :last_updated_by_id => @u.id)
       visit bill_of_base_materialx.bom_status_boms_path(project_id: @proj.id)
-      save_and_open_page
+      #save_and_open_page
       expect(page).to have_content('MyString')  
     end
   end

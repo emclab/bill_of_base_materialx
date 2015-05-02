@@ -22,7 +22,7 @@ module BillOfBaseMaterialx
     end
   
     def create
-      @bom = BillOfBaseMaterialx::Bom.new(params[:bom], :as => :role_new)
+      @bom = BillOfBaseMaterialx::Bom.new(new_params)
       @bom.last_updated_by_id = session[:user_id]
       if @bom.save
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
@@ -50,7 +50,7 @@ module BillOfBaseMaterialx
     def update
       @bom = BillOfBaseMaterialx::Bom.find_by_id(params[:id])
       @bom.last_updated_by_id = session[:user_id]
-      if @bom.update_attributes(params[:bom], :as => :role_update)
+      if @bom.update_attributes(edit_params)
         redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
       else
         @erb_code = find_config_const('bom_edit_view', 'bill_of_base_materialx')
@@ -87,6 +87,18 @@ module BillOfBaseMaterialx
       @project = BillOfBaseMaterialx.project_class.find_by_id(params[:project_id]) if params[:project_id].present?
       @project = BillOfBaseMaterialx.project_class.find_by_id(BillOfBaseMaterialx::Bom.find_by_id(params[:id]).project_id) if params[:id].present?
       @part = BillOfBaseMaterialx.part_class.find_by_id(BillOfBaseMaterialx::Bom.find_by_id(params[:id]).part_id) if params[:id].present?
+    end
+    
+    private
+    
+    def new_params
+      params.require(:bom).permit(:about_cost, :brief_note, :total_reference, :last_updated_by_id, :part_id, :preferred_mfr, :preferred_supplier, 
+                     :project_id, :qty, :unit_price_reference, :wf_state, :name, :part_num, :spec, :unit, :name, :spec)
+    end
+    
+    def edit_params
+      params.require(:bom).permit(:about_cost, :brief_note, :total_reference, :part_id, :preferred_mfr, :preferred_supplier, :qty, :wf_state, 
+                     :unit_price_reference, :name, :part_num, :spec, :unit,  :name)
     end
      
   end
