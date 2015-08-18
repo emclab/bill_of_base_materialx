@@ -58,6 +58,17 @@ module BillOfBaseMaterialx
         get 'index', {:part_id => @part.id}
         expect(assigns[:boms]).to  match_array([task])
       end
+      
+      it "should return all child records recursively" do
+        user_access = FactoryGirl.create(:user_access, :action => 'index', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
+        :sql_code => "BillOfBaseMaterialx::Bom.order('created_at DESC')")
+        session[:user_id] = @u.id
+        task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part.id)
+        task1 = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part1.id, :bom_level_parent_id => task.id)
+        task2 = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => @part1.id + 1, :bom_level_parent_id => task1.id)
+        get 'index', {:bom_id => task.id}
+        expect(assigns[:boms]).to  match_array([task, task1, task2])
+      end
             
     end
   

@@ -9,7 +9,8 @@ module BillOfBaseMaterialx
       @title = t('BOMs')
       @boms = params[:bill_of_base_materialx_boms][:model_ar_r]  #returned by check_access_right
       @boms = @boms.where(:part_id => @part.id) if @part
-      @boms = @boms.where(:project_id => @project.id) if @project       
+      @boms = @boms.where(:project_id => @project.id) if @project    
+      @boms = @boms.where(id: child_records(@bom.id)) if @bom  
       @boms = @boms.page(params[:page]).per_page(@max_pagination) 
       @erb_code = find_config_const('bom_index_view', 'bill_of_base_materialx')
     end
@@ -87,6 +88,17 @@ module BillOfBaseMaterialx
       @project = BillOfBaseMaterialx.project_class.find_by_id(params[:project_id]) if params[:project_id].present?
       @project = BillOfBaseMaterialx.project_class.find_by_id(BillOfBaseMaterialx::Bom.find_by_id(params[:id]).project_id) if params[:id].present?
       @part = BillOfBaseMaterialx.part_class.find_by_id(BillOfBaseMaterialx::Bom.find_by_id(params[:id]).part_id) if params[:id].present?
+      @bom = BillOfBaseMaterialx::Bom.find_by_id(params[:bom_id]) if params[:bom_id].present?
+    end
+    
+    def child_records(bom_id)
+      id_ary = id_ary1 = [bom_id]
+      loop do
+        id_ary1 = BillOfBaseMaterialx::Bom.where(:bom_level_parent_id => id_ary1).pluck(:id)
+        id_ary += id_ary1
+        break if id_ary1.blank?
+      end
+      id_ary.uniq 
     end
     
     private

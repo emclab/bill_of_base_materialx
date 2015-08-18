@@ -23,13 +23,13 @@
 		  	<% unless has_action_right?('show', params[:controller], r) %>
 		  	  <td><%= prt(r, :id) %></td>
 		  	<% else %>
-		  	  <td><%= link_to r.id.to_s, SUBURI + "/authentify/view_handler?index=1&url=#{bom_path(r)}" %></td>
+		  	  <td><%= link_to r.id.to_s, SUBURI + "/view_handler?index=1&url=#{bom_path(r)}" %></td>
 		  	<% end %>
 		  	<td><%= r.created_at.strftime("%Y/%m/%d") %></td>
 			<% unless has_action_right?('show', BillOfBaseMaterialx.project_class.to_s.underscore.pluralize, @project) %>
 		  	  <td><%= prt(r, 'project.name') %></td>
 		  	<% else %>
-		  	  <td><%= link_to r.project.name, SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(ext_construction_projectx.project_path(r.project_id))}" %></td>
+		  	  <td><%= link_to r.project.name, SUBURI + "/view_handler?index=1&url=#{SUBURI + CGI::escape(ext_construction_projectx.project_path(r.project_id))}" %></td>
 		  	<% end %>
 		  	<td><%= prt(r, :name) %></td>
 			<td><%= prt(r, :part_num) %></td>
@@ -37,7 +37,7 @@
 			<td><%= prt(r, :qty) %>/<%= prt(r, :unit) %></td>
 			<td><%= prt(r, :total_reference) %>
 			<td><%= prt(r, 'last_updated_by.name') if r.last_updated_by_id.present? %></td> 
-			<td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_bom_path(r, :parent_record_id => r.project_id, :parent_resource => BillOfBaseMaterialx.project_class.to_s.underscore.pluralize)}", :class => BUTTONS_CLS['action']  if has_action_right?('update', params[:controller], r) %></td>
+			<td><%= link_to t('Edit'), SUBURI + "/view_handler?index=1&url=#{edit_bom_path(r, :parent_record_id => r.project_id, :parent_resource => BillOfBaseMaterialx.project_class.to_s.underscore.pluralize)}", :class => BUTTONS_CLS['action']  if has_action_right?('update', params[:controller], r) %></td>
 		  </tr>
 		<% end %>
 	</table>
@@ -46,11 +46,11 @@
 	  <tr>
 	    <th>
 	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    	<%= link_to t('Back'), SUBURI + "/authentify/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
+	    	<%= link_to t('Back'), SUBURI + "/view_handler?index=0", :class => BUTTONS_CLS['action']  %>
 	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	    	<%= link_to t('New Part'), SUBURI + "/authentify/view_handler?index=1&url=#{CGI.escape new_bom_path(project_id: @project.id, parent_record_id: @project.id, parent_resource: 'ext_construction_projectx/projects')}", :class => BUTTONS_CLS['action'] if @project && has_action_right?('create', params[:controller], @project) %>
+	    	<%= link_to t('New Part'), SUBURI + "/view_handler?index=1&url=#{CGI.escape new_bom_path(project_id: @project.id, parent_record_id: @project.id, parent_resource: 'ext_construction_projectx/projects')}", :class => BUTTONS_CLS['action'] if @project && has_action_right?('create', params[:controller], @project) %>
 	    	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    	    <%= link_to t('Search'), SUBURI + "/authentify/view_handler?index=1&url=#{search_boms_path}", :class => BUTTONS_CLS['action'] if has_action_right?('search', params[:controller]) %>
+    	    <%= link_to t('Search'), SUBURI + "/view_handler?index=1&url=#{search_boms_path}", :class => BUTTONS_CLS['action'] if has_action_right?('search', params[:controller]) %>
   		  
 	    </th>
 	  </tr>
