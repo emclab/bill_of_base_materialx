@@ -104,10 +104,13 @@ RSpec.describe "LinkTests", type: :request do
       #save_and_open_page
       fill_in 'bom_part_id', :with => @part.id + 1
       fill_in 'bom_qty', :with => 100
+      fill_in 'bom_name', :with => 'a name'
+      fill_in 'bom_spec', :with => 'a spec'
+      fill_in 'bom_unit', :with => 'a unit'
       click_button 'Save'
       #save_and_open_page
       visit bill_of_base_materialx.boms_path
-      
+      #save_and_open_page
       expect(page).to have_content(100)
       #with wrong data
       visit bill_of_base_materialx.boms_path(:project_id => @proj.id)

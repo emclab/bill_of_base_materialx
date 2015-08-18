@@ -5,7 +5,9 @@ FactoryGirl.define do
     part_id 1
     project_id 1
     qty 1
-    #unit "MyString"
+    unit "MyString"
+    name "a material"
+    spec "a spec"
     preferred_mfr "MyText"
     preferred_supplier ""
     #last_updated_by_id 1

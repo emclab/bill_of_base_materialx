@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   mount Searchx::Engine => '/search'
   mount BaseMaterialx::Engine => 'base_material'
   mount PurchaseOrderx::Engine => 'po'
-  #mount InQuotex::Engine => '/in_quote'
+  mount InQuotex::Engine => '/in_quote'
   mount StateMachineLogx::Engine => '/sm_log'
   mount BizWorkflowx::Engine => '/biz_wf'
   mount Supplierx::Engine => '/supplier'

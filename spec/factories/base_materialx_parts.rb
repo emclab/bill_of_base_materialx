@@ -4,7 +4,6 @@ FactoryGirl.define do
   factory :base_materialx_part, :class => 'BaseMaterialx::Part' do
     name "MyString"
     spec "MyString"
-    part_num "MyString"
     unit "MyString"
     desp "MyText"
     preferred_mfr "MyText"

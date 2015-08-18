@@ -31,10 +31,10 @@
 		  	<% else %>
 		  	  <td><%= link_to r.project.name, SUBURI + "/authentify/view_handler?index=1&url=#{SUBURI + CGI::escape(ext_construction_projectx.project_path(r.project_id))}" %></td>
 		  	<% end %>
-		  	<td><%= prt(r, 'part.name') %></td>
-			<td><%= prt(r, 'part.part_num') %></td>
-			<td><%= prt(r, 'part.spec') %></td>
-			<td><%= prt(r, :qty) %>/<%= prt(r, 'part.unit') %></td>
+		  	<td><%= prt(r, :name) %></td>
+			<td><%= prt(r, :part_num) %></td>
+			<td><%= prt(r, :spec) %></td>
+			<td><%= prt(r, :qty) %>/<%= prt(r, :unit) %></td>
 			<td><%= prt(r, :total_reference) %>
 			<td><%= prt(r, 'last_updated_by.name') if r.last_updated_by_id.present? %></td> 
 			<td><%= link_to t('Edit'), SUBURI + "/authentify/view_handler?index=1&url=#{edit_bom_path(r, :parent_record_id => r.project_id, :parent_resource => BillOfBaseMaterialx.project_class.to_s.underscore.pluralize)}", :class => BUTTONS_CLS['action']  if has_action_right?('update', params[:controller], r) %></td>

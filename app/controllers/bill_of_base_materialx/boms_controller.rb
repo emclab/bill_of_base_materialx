@@ -25,7 +25,7 @@ module BillOfBaseMaterialx
       @bom = BillOfBaseMaterialx::Bom.new(new_params)
       @bom.last_updated_by_id = session[:user_id]
       if @bom.save
-        redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
+        redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Saved!")
       else
         @project = BillOfBaseMaterialx.project_class.find_by_id(params[:bom][:project_id]) if params[:bom].present? && params[:bom][:project_id].present?
         @part = BillOfBaseMaterialx.part_class.find_by_id(params[:bom][:part_id].to_i) if params[:bom].present? && params[:bom][:part_id].present?
@@ -43,7 +43,7 @@ module BillOfBaseMaterialx
       @erb_code = find_config_const('bom_edit_view', 'bill_of_base_materialx')
       @js_erb_code = find_config_const('bom_edit_js_view', 'bill_of_base_materialx')
       #if @bom.wf_state.present? && @bom.current_state != :initial_state
-       # redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=NO Update. Record Being Processed!")
+       # redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=NO Update. Record Being Processed!")
       #end
     end
   
@@ -51,7 +51,7 @@ module BillOfBaseMaterialx
       @bom = BillOfBaseMaterialx::Bom.find_by_id(params[:id])
       @bom.last_updated_by_id = session[:user_id]
       if @bom.update_attributes(edit_params)
-        redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
+        redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Updated!")
       else
         @erb_code = find_config_const('bom_edit_view', 'bill_of_base_materialx')
         @js_erb_code = find_config_const('bom_edit_js_view', 'bill_of_base_materialx')
@@ -68,7 +68,7 @@ module BillOfBaseMaterialx
     
     def destroy     
       BillOfBaseMaterialx::Bom.delete(params[:id].to_i)
-      redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!")
+      redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Deleted!")
     end
     
     def autocomplete
@@ -93,12 +93,12 @@ module BillOfBaseMaterialx
     
     def new_params
       params.require(:bom).permit(:about_cost, :brief_note, :total_reference, :last_updated_by_id, :part_id, :preferred_mfr, :preferred_supplier, 
-                     :project_id, :qty, :unit_price_reference, :wf_state, :name, :part_num, :spec, :unit, :name, :spec)
+                     :project_id, :qty, :unit_price_reference, :wf_state, :name, :part_num, :spec, :unit)
     end
     
     def edit_params
       params.require(:bom).permit(:about_cost, :brief_note, :total_reference, :part_id, :preferred_mfr, :preferred_supplier, :qty, :wf_state, 
-                     :unit_price_reference, :name, :part_num, :spec, :unit,  :name)
+                     :unit_price_reference, :part_num, :spec, :unit,  :name)
     end
      
   end

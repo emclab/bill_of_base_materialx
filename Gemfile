@@ -23,6 +23,7 @@ gem 'purchase_orderx', :path => '../purchase_orderx'
 gem 'state_machine_logx', :path => '../state_machine_logx'
 gem 'biz_workflowx', :path => '../biz_workflowx'
 gem 'supplierx', :path => '../supplierx'
+gem 'in_quotex', :path => '../in_quotex'
 #
 #gem 'event_taskx', :path => '../event_taskx'
 

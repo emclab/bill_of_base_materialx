@@ -79,14 +79,14 @@ module BillOfBaseMaterialx
         session[:user_id] = @u.id
         task = FactoryGirl.attributes_for(:bill_of_base_materialx_bom, :project_id => @proj.id )  
         get 'create', {:bom => task, :project_id => @proj.id, :part_id => @part.id}
-        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Saved!")
+        expect(response).to redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Saved!")
       end
       
       it "should render 'new' if data error" do        
         user_access = FactoryGirl.create(:user_access, :action => 'create', :resource =>'bill_of_base_materialx_boms', :role_definition_id => @role.id, :rank => 1,
         :sql_code => "")
         session[:user_id] = @u.id
-        task = FactoryGirl.attributes_for(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => nil)
+        task = FactoryGirl.attributes_for(:bill_of_base_materialx_bom, :project_id => @proj.id, :part_id => 'nil')
         get 'create', {:bom => task}
         expect(response).to render_template('new')
       end
@@ -111,7 +111,7 @@ module BillOfBaseMaterialx
         session[:user_id] = @u.id
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id)
         get 'update', {:id => task.id, :bom => {:name => 'new name'}}
-        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Updated!")
+        expect(response).to redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Updated!")
       end
       
       it "should render edit with data error" do
@@ -119,7 +119,7 @@ module BillOfBaseMaterialx
         :sql_code => "")
         session[:user_id] = @u.id
         task = FactoryGirl.create(:bill_of_base_materialx_bom, :project_id => @proj.id)
-        get 'update', {:id => task.id, :bom => {:part_id => ''}}
+        get 'update', {:id => task.id, :bom => {:name => ''}}
         expect(response).to render_template('edit')
       end
     end
@@ -142,7 +142,7 @@ module BillOfBaseMaterialx
         session[:user_id] = @u.id
         q = FactoryGirl.create(:bill_of_base_materialx_bom)
         get 'destroy', {:id => q.id }
-        expect(response).to redirect_to URI.escape(SUBURI + "/authentify/view_handler?index=0&msg=Successfully Deleted!")
+        expect(response).to redirect_to URI.escape(SUBURI + "/view_handler?index=0&msg=Successfully Deleted!")
       end
     end
     
