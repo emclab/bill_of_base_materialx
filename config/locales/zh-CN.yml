@@ -76,3 +76,6 @@ zh-CN:
   Total($) : '预算总额（￥）'
   Qty Unit : '单位'
   About Total : '关于总价'
+  BOM Level : 'BOM层级'
+  BOM Parent Record : 'BOM上层'
+  Check Stock : '查库存'
