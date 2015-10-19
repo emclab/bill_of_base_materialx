@@ -5,6 +5,9 @@ module BillOfBaseMaterialx
     belongs_to :project, :class_name => BillOfBaseMaterialx.project_class.to_s
     belongs_to :part, :class_name => BillOfBaseMaterialx.part_class.to_s
     belongs_to :last_updated_by, :class_name => 'Authentify::User'
+    belongs_to :bom_level, :class_name => 'Commonx::MiscDefinition'
+    belongs_to :parent_bom, :class_name => 'BillOfBaseMaterialx::Bom', :foreign_key => 'bom_level_parent_id'
+    has_many :child_boms, :class_name => 'BillOfBaseMaterialx::Bom', :foreign_key => 'bom_level_parent_id'
     
     validates :name, :spec, :unit, :presence => true
     validates :qty, :presence => true, :numericality => {:greater_than => 0, :only_integer => true}

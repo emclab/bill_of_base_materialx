@@ -16,8 +16,8 @@ class CreateBillOfBaseMaterialxBoms < ActiveRecord::Migration
       t.text :brief_note
       t.text :about_cost
       t.float :unit_price_reference
-      t.integer :bom_level_id
-      t.integer :bom_level_parent_id
+      t.integer :bom_level_id  #defined in commonx as misc definition
+      t.integer :bom_level_parent_id  #parent record bom_id
       t.string :aux_resource
 
       t.timestamps
