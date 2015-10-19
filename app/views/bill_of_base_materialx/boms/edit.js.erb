@@ -3,7 +3,7 @@
   
 <% else %>
 
-<% if params[:bom][:part_name_autocomplete].include?(' -    ') %>
+<% if params[:bom][:field_changed] == 'part_name' && params[:bom][:part_name_autocomplete].present? %>
   <% v = params[:bom][:part_name_autocomplete] %>
   <% part = BillOfBaseMaterialx.part_class.where(name: v.sub(/\s\-\s{4}.+/, '')).where(spec: v.sub(/.+\s-\s{4}/, '')).first %>
   <% if part.present? %>
@@ -13,6 +13,7 @@
     $('#bom_unit').val("<%=part.unit %>");
     $('#bom_preferred_mfr').val("<%=part.preferred_mfr %>");
     $('#bom_preferred_supplier').val("<%=part.preferred_supplier %>");
+    $('#bom_field_changed').val("");
   <% else %>
     $('#bom_part_id').val("");
     $('#bom_part_num').val("");
@@ -20,6 +21,7 @@
     $('#bom_unit').val("");
     $('#bom_preferred_mfr').val("");
     $('#bom_preferred_supplier').val("");
+    $('#bom_field_changed').val("");
   <% end %>
 <% end %>
 

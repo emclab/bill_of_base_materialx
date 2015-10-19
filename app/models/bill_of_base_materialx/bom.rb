@@ -1,6 +1,6 @@
 module BillOfBaseMaterialx
   class Bom < ActiveRecord::Base
-    attr_accessor :project_name, :category_name, :sub_category_name, :id_noupdate, :wf_comment, :wf_event, :part_name_autocomplete
+    attr_accessor :project_name, :category_name, :sub_category_name, :id_noupdate, :wf_comment, :wf_event, :part_name_autocomplete, :field_changed
                                     
     belongs_to :project, :class_name => BillOfBaseMaterialx.project_class.to_s
     belongs_to :part, :class_name => BillOfBaseMaterialx.part_class.to_s

@@ -33,7 +33,7 @@
   <%= f.input :preferred_supplier, :label => t('Preferred Supplier'), :input_html => {:rows => 2}, :readonly => readonly?(@bom, 'preferred_supplier') %>
   <%= f.input :brief_note, :label => t('Brief Note'), :readonly => readonly?(@bom, 'brief_note'), :input_html => {:rows => 2} %>
     
-  <div class="form-actions col-sm-offset-<%=BUTTONS_CLS['offset#']%>" >
+  <div class="btn-toolbar" >
               <%= link_to t('Back'), SUBURI + "/view_handler?index=0", :class => BUTTONS_CLS['action'] %>
               <%= f.button :submit, t('Save'), :class => BUTTONS_CLS['action'] %>
          </div> 

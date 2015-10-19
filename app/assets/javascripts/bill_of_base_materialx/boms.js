@@ -18,6 +18,7 @@ $(function() {
 
 $(function (){
 	$('#bom_part_name_autocomplete').change(function(){
+	  $('#bom_field_changed').val('part_name');
       $.get(window.location, $('form').serialize(), null, "script");
   	  return false;
 	});

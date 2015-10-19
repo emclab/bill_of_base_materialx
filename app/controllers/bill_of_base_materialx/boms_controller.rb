@@ -86,6 +86,7 @@ module BillOfBaseMaterialx
     def load_parent_record
       @part = BillOfBaseMaterialx.part_class.find_by_id(params[:part_id]) if params[:part_id].present?
       @project = BillOfBaseMaterialx.project_class.find_by_id(params[:project_id]) if params[:project_id].present?
+      @project = BillOfBaseMaterialx.project_class.find_by_id(params[:bom][:project_id]) if params[:bom] && params[:bom][:project_id].present?
       @project = BillOfBaseMaterialx.project_class.find_by_id(BillOfBaseMaterialx::Bom.find_by_id(params[:id]).project_id) if params[:id].present?
       @part = BillOfBaseMaterialx.part_class.find_by_id(BillOfBaseMaterialx::Bom.find_by_id(params[:id]).part_id) if params[:id].present?
       @bom = BillOfBaseMaterialx::Bom.find_by_id(params[:bom_id]) if params[:bom_id].present?
