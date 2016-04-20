@@ -7,11 +7,11 @@ require "bill_of_base_materialx/version"
 Gem::Specification.new do |s|
   s.name        = "bill_of_base_materialx"
   s.version     = BillOfBaseMaterialx::VERSION
-  s.authors     = ["TODO: Your name"]
-  s.email       = ["TODO: Your email"]
-  s.homepage    = "TODO"
-  s.summary     = "TODO: Summary of BillOfBaseMaterialx."
-  s.description = "TODO: Description of BillOfBaseMaterialx."
+  s.authors     = ["Your name"]
+  s.email       = ["Your@email.com"]
+  s.homepage    = "http://home.com"
+  s.summary     = "Summary of BillOfBaseMaterialx."
+  s.description = "Description of BillOfBaseMaterialx."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
